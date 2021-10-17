@@ -63,7 +63,11 @@ print(sfo_data.head())
 # Calculate the mean number of housing units per year (hint: use groupby) 
 
 
-mean_housing_units_year = sfo_data.groupby("year").mean()
+mean_housing_units_year_all = sfo_data.groupby("year").mean()
+
+#%%
+
+mean_housing_units_year = mean_housing_units_year_all["housing_units"]
 
 print(mean_housing_units_year.head())
 
