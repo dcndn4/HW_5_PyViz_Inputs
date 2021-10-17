@@ -77,3 +77,8 @@ print(mean_housing_units_year.head())
 mean_housing_units_year.to_csv("C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_PyViz_Inputs/Resources/mean_hsg_unit_yr.csv", encoding='utf-8', index=False)
 
 #%%
+
+
+
+max_value=max(mean_housing_units_year)
+min_value=min(mean_housing_units_year)
