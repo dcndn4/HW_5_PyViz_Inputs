@@ -78,7 +78,42 @@ mean_housing_units_year.to_csv("C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_P
 
 #%%
 
+# Use the Pandas plot function to plot the average housing units per year.
+# Note: You will need to manually adjust the y limit of the chart using the min and max values from above.
 
+# Plot data using hvplot.bar
+# mean_housing_units_year.hvplot.bar(x='year', y='housing_units', title="Housing Units in San Francisco from 2010 to 2016") 
 
+# Optional Challenge: Use the min, max, and std to scale the y limits of the chart
 max_value=max(mean_housing_units_year)
 min_value=min(mean_housing_units_year)
+print(f'Min value is {min_value}')
+print(f'Max value is {max_value}')
+
+
+#%%
+
+
+mean_housing_units_year.hvplot.bar(x='year', y='housing_units').opts(yformatter="%.0f", ylim=(350000, 400000), title="Housing Units in San Francisco from 2010 to 2016") 
+# putting min and max values in to axis isn't generating the best result just yet. 
+
+#%%
+
+# Average Housing Costs in San Francisco Per Year
+
+# In this section, you will calculate the average monthly rent and 
+# the average price per square foot for each year. 
+# An investor may wish to better understand the sales price of the 
+# rental property over time. For example, a customer will want to know 
+# if they should expect an increase or decrease in the property 
+# value over time so they can determine how long to hold the rental property. 
+# Plot the results as two line charts.
+
+# Optional challenge: Plot each line chart in a different color.
+
+# avg_price_sqr_ft = mean_housing_units_year_all["sale_price_sqr_foot"]
+# avg_monthly_rent = mean_housing_units_year_all["gross_rent"]
+
+avg_both = mean_housing_units_year_all[["sale_price_sqr_foot", "gross_rent"]]
+
+#%%
