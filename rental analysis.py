@@ -132,3 +132,24 @@ avg_monthly_rent.hvplot(title="Average_Gross_Rent_by_Year").opts(line_color='blu
 #.opts(bgcolor='red') # oops, that's not what I'm looking for
 
 #%%
+
+# Average Prices by Neighborhood
+
+# In this section, you will use hvplot to create two interactive visulizations 
+# of average prices with a dropdown selector for the neighborhood. 
+# The first visualization will be a line plot showing the trend of average 
+# price per square foot over time for each neighborhood. 
+# The second will be a line plot showing the trend of average montly rent over time for each neighborhood.
+
+# Hint: It will be easier to create a new DataFrame from 
+# grouping the data and calculating the mean prices for each year and neighborhood
+
+
+#%%
+
+# Group by year and neighborhood and then create a new dataframe of the mean values
+# YOUR CODE HERE!
+
+# note - answer has index iterated, different from year values
+
+# avg_nbrhds_years = sfo_data.groupby("year", "neighborhood").average() -- nope
