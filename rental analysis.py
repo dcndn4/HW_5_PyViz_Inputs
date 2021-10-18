@@ -111,9 +111,24 @@ mean_housing_units_year.hvplot.bar(x='year', y='housing_units').opts(yformatter=
 
 # Optional challenge: Plot each line chart in a different color.
 
-# avg_price_sqr_ft = mean_housing_units_year_all["sale_price_sqr_foot"]
-# avg_monthly_rent = mean_housing_units_year_all["gross_rent"]
+avg_price_sqr_ft = mean_housing_units_year_all["sale_price_sqr_foot"]
+avg_monthly_rent = mean_housing_units_year_all["gross_rent"]
 
 avg_both = mean_housing_units_year_all[["sale_price_sqr_foot", "gross_rent"]]
+
+#%%
+
+# Create two line charts, one to plot the average sale price per square foot and another for average montly rent
+
+# Line chart for average sale price per square foot
+
+avg_price_sqr_ft.hvplot(title="Average_Price_per_SqFt_by_Year").opts(line_color='red')
+
+#%%
+
+
+# Line chart for average montly rent
+avg_monthly_rent.hvplot(title="Average_Gross_Rent_by_Year").opts(line_color='blue')
+#.opts(bgcolor='red') # oops, that's not what I'm looking for
 
 #%%
