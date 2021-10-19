@@ -25,6 +25,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+import numpy as np
+import panel as pn  
+from panel.interact import interact
+from panel import widgets
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -161,5 +166,17 @@ avg_prices_nhbrhood = (
     pd.concat([avg_price_sqr_ft, avg_monthly_rent], axis=1).dropna().reset_index()
 )
 print(avg_prices_nhbrhood.head())
+
+#%%
+
+# Define function to choose a year
+def choose_year(year):
+    return year
+
+#%%
+
+# Declare one list of years to be used in a Panel select list
+list_of_years = ['2014', '2013', '2012', '2011', '2010']
+interact(choose_year, year=list_of_years)
 
 #%%
