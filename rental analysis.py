@@ -148,8 +148,18 @@ avg_monthly_rent.hvplot(title="Average_Gross_Rent_by_Year").opts(line_color='blu
 #%%
 
 # Group by year and neighborhood and then create a new dataframe of the mean values
-# YOUR CODE HERE!
+
+# want to combine these two df.s
+# avg_price_sqr_ft = mean_housing_units_year_all["sale_price_sqr_foot"]
+# avg_monthly_rent = mean_housing_units_year_all["gross_rent"]
 
 # note - answer has index iterated, different from year values
 
 # avg_nbrhds_years = sfo_data.groupby("year", "neighborhood").average() -- nope
+
+avg_prices_nhbrhood = (
+    pd.concat([avg_price_sqr_ft, avg_monthly_rent], axis=1).dropna().reset_index()
+)
+print(avg_prices_nhbrhood.head())
+
+#%%
