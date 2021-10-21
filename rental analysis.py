@@ -180,3 +180,5 @@ list_of_years = ['2014', '2013', '2012', '2011', '2010']
 interact(choose_year, year=list_of_years)
 
 #%%
+
+list_of_neighborhoods = sfo_data['neighborhood'].tolist()
