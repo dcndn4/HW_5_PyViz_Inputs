@@ -46,10 +46,10 @@ map_box_api = os.getenv("mapbox")
 # Read the census data into a Pandas DataFrame
 #C:\Users\CS_Knit_tinK_SC\Documents\GitHub\HW_5_PyViz_Inputs\Resources\sfo_neighborhoods_census_data.csv
 
-file_path="C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_PyViz_Inputs/Resources/sfo_neighborhoods_census_data.csv"
+file_city_path="C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_PyViz_Inputs/Resources/sfo_neighborhoods_census_data.csv"
 
 #file_path = Path("Resources/sfo_neighborhoods_census_data.csv")
-sfo_data = pd.read_csv(file_path, index_col="year")
+sfo_data = pd.read_csv(file_city_path, index_col="year")
 print(sfo_data.head())
 
 #%%
@@ -248,3 +248,70 @@ print(mean_price_sorted.head(10))
 #%%
 
 ten_priciest=mean_price_sorted.head(10)
+
+#%%
+#%%
+#%%
+
+# Neighborhood Map
+
+# In this section, you will read in neighborhoods location data
+#  and build an interactive map with the average house value per neighborhood. 
+# Use a scatter_mapbox from Plotly express to create the visualization. 
+# Remember, you will need your Mapbox API key for this.
+
+#%%
+
+
+file_coord_path="C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_PyViz_Inputs/Resources/neighborhoods_coordinates.csv"
+
+
+map_coord_data = pd.read_csv(file_coord_path)
+print(map_coord_data.head())
+
+#%%
+
+# Data Preparation
+
+# You will need to join the location data with the mean values per neighborhood.
+
+#    Calculate the mean values for each neighborhood.
+
+#    Join the average values with the neighborhood locations.
+
+
+
+mean_sale_price_sq_foot.head()
+
+#%%
+
+# change column name to match map df
+
+mean_sale_price_sq_foot=mean_sale_price_sq_foot.rename(columns={'neighborhood': 'Neighborhood'})
+
+#%%
+
+# join the two tables in to one
+
+neighbor_all =pd.merge(mean_sale_price_sq_foot, map_coord_data, on= 'Neighborhood')
+print(neighbor_all)
+
+#%%
+#%%
+
+# Mapbox Visualization
+
+# Plot the average values per neighborhood using a Plotly express scatter_mapbox visualization.
+
+
+#%%
+neighbor_map=pd.Series(neighbor_all)
+
+#%%
+
+# prior
+
+#pop_count="C:/Users/CS_Knit_tinK_SC/Documents/My Data Sources/101421/population_counts.csv"
+#foreclosures = pd.read_csv(pop_count, index_col='filing_date', parse_dates=True, infer_datetime_format=True)
+
+#%%

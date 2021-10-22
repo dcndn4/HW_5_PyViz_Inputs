@@ -1,0 +1,7 @@
+
+	Neighborhood 		Lat 			Lon
+0 	Alamo Square 		37.791012 	-122.402100
+1 	Anza Vista 		37.779598 	-122.443451
+2 	Bayview 		37.734670 	-122.401060
+3 	Bayview Heights 	37.728740 	-122.410980
+4 	Bernal Heights 		37.728630 	-122.443050
