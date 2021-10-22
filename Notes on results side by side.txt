@@ -1,0 +1,12 @@
+
+	year 	neighborhood 	sale_price_sqr_foot 	housing_units 	gross_rent
+0 	2010 	Alamo Square 	291.182945 	372560 	1239
+1 	2010 	Anza Vista 	267.932583 	372560 	1239
+2 	2010 	Bayview 	170.098665 	372560 	1239
+3 	2010 	Buena Vista Park 	347.394919 	372560 	1239
+4 	2010 	Central Richmond 	319.027623 	372560 	1239
+5 	2010 	Central Sunset 	418.172493 	372560 	1239
+6 	2010 	Corona Heights 	369.359338 	372560 	1239
+7 	2010 	Cow Hollow 	569.379968 	372560 	1239
+8 	2010 	Croker Amazon 	165.645730 	372560 	1239
+9 	2010 	Diamond Heights 	456.930822 	372560 	1239
