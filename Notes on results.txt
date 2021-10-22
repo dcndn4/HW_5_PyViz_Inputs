@@ -1,0 +1,19 @@
+
+Result per notebook provided
+
+	neighborhood 		sale_price_sqr_foot 	housing_units 	gross_rent
+				calc this
+				sort on this desc
+
+0 	Union Square District 	903.993258 		377427.50 	2555.166667
+1 	Merced Heights 		788.844818 		380348.00 	3414.000000
+2 	Miraloma Park 		779.810842 		375967.25 	2155.250000
+3 	Pacific Heights 	689.555817 		378401.00 	2817.285714
+4 	Westwood Park 		687.087575 		382295.00 	3959.000000
+5 	Telegraph Hill 		676.506578 		378401.00 	2817.285714
+6 	Presidio Heights 	675.350212 		378401.00 	2817.285714
+7 	Cow Hollow 		665.964042 		378401.00 	2817.285714
+8 	Potrero Hill 		662.013613 		378401.00 	2817.285714
+9 	South Beach 		650.124479 		375805.00 	2099.000000
+
+Notes: try and get amounts (2nd and 4th col) rounded?

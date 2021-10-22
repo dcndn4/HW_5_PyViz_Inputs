@@ -208,3 +208,43 @@ interact(choose_year, year=list_of_years)
 #%%
 
 list_of_neighborhoods = sfo_data['neighborhood'].tolist()
+
+#%%
+#%%
+#%%
+
+# The Top 10 Most Expensive Neighborhoods
+
+# In this section, you will need to calculate the 
+# mean sale price per square foot for each neighborhood 
+# and then sort the values to obtain the top 10 most expensive neighborhoods on average. 
+# Plot the results as a bar chart.
+
+#%%
+#%%
+
+
+# Calculate the mean sale-price-per-square-foot  for each neighborhood
+
+
+mean_sale_price_sq_foot_all = sfo_data.groupby("neighborhood").mean()
+#%%
+
+mean_sale_price_sq_foot_all.reset_index(level=0, inplace=True)
+
+
+#%%
+
+mean_sale_price_sq_foot=mean_sale_price_sq_foot_all[["neighborhood", "sale_price_sqr_foot", "housing_units", "gross_rent"]]
+#%%
+mean_price_sorted=mean_sale_price_sq_foot.sort_values(by='sale_price_sqr_foot', ascending=False)
+
+#%%
+
+mean_price_sorted=mean_price_sorted.reset_index(drop=True)
+#%%
+print(mean_price_sorted.head(10))
+
+#%%
+
+ten_priciest=mean_price_sorted.head(10)
