@@ -39,6 +39,7 @@ warnings.filterwarnings('ignore')
 load_dotenv()
 map_box_api = os.getenv("mapbox")
 
+
 #%%
 
 # Load Data¶
@@ -66,7 +67,7 @@ print(sfo_data.head())
 #%%
 
 # Calculate the mean number of housing units per year (hint: use groupby) 
-
+# mean_housing_units_year = sfo_data.groupby("year").mean()
 
 mean_housing_units_year_all = sfo_data.groupby("year").mean()
 
@@ -120,6 +121,7 @@ avg_price_sqr_ft = mean_housing_units_year_all["sale_price_sqr_foot"]
 avg_monthly_rent = mean_housing_units_year_all["gross_rent"]
 
 avg_both = mean_housing_units_year_all[["sale_price_sqr_foot", "gross_rent"]]
+print(avg_both.head())
 
 #%%
 
@@ -191,9 +193,13 @@ avg_prices_nhbrhood = new_df.groupby(level=[0,1])['sale_price_sqr_foot', 'gross_
 #%%
 avg_prices_nhbrhood.sort_index()
 
-# print(avg_prices_nhbrhood_new.head())
+print(avg_prices_nhbrhood.head())
 
 #%%
+
+# Use hvplot to create an interactive line chart of the average price per sq ft.
+# The plot should have a dropdown selector for the neighborhood
+# Define function to choose a year
 
 # Define function to choose a year
 def choose_year(year):
@@ -202,14 +208,40 @@ def choose_year(year):
 #%%
 
 # Declare one list of years to be used in a Panel select list
-list_of_years = ['2014', '2013', '2012', '2011', '2010']
+# list_of_years = ['2014', '2013', '2012', '2011', '2010']
+
+
+#%%
+# Declare one list of neighborhoods to be used in a Panel select list
+list_of_neighborhoods = sfo_data['neighborhood'].tolist()
 interact(choose_year, year=list_of_years)
 
+avg_prices_nhbrhood.hvplot(y='year',
+    x='sale_price_sqr_foot',
+    title='Average Sale Price per Year (and chosen neighborhood)',
+    groupby='neighborhood'
+    )
 #%%
+# Use hvplot to create an interactive line chart of the average monthly rent.
+# The plot should have a dropdown selector for the neighborhood
+def choose_neighborhood(neighborhood):
+    return neighborhood
 
+# Declare one list of neighborhoods to be used in a Panel select list
 list_of_neighborhoods = sfo_data['neighborhood'].tolist()
 
-#%%
+interact(choose_neighborhood, neighborhood=list_of_neighborhoods)
+
+avg_prices_nhbrhood.hvplot(y='year',
+        x='gross_rent', 
+        title='Average Rent per Year (and chosen neighborhood)',
+        groupby='neighborhood'
+        )
+
+
+
+
+
 #%%
 #%%
 
@@ -235,22 +267,80 @@ mean_sale_price_sq_foot_all.reset_index(level=0, inplace=True)
 
 #%%
 
-mean_sale_price_sq_foot=mean_sale_price_sq_foot_all[["neighborhood", "sale_price_sqr_foot", "housing_units", "gross_rent"]]
 #%%
-mean_price_sorted=mean_sale_price_sq_foot.sort_values(by='sale_price_sqr_foot', ascending=False)
+# changed my mean_sale_price_sq_foot to starter program's df_costs
+
+df_costs=mean_sale_price_sq_foot_all[["neighborhood", "sale_price_sqr_foot", "housing_units", "gross_rent"]]
+#%%
+df_costs_sorted=df_costs.sort_values(by='sale_price_sqr_foot', ascending=False)
 
 #%%
 
-mean_price_sorted=mean_price_sorted.reset_index(drop=True)
+df_costs_sorted=df_costs_sorted.reset_index(drop=True)
 #%%
-print(mean_price_sorted.head(10))
+print(df_costs_sorted.head(10))
 
 #%%
 
-ten_priciest=mean_price_sorted.head(10)
+df_expensive_neighborhoods=df_costs_sorted.head(10)
+
+print(df_expensive_neighborhoods.head())
+#%%
+
+# Plotting the data from the top 10 expensive neighborhoods
+df_expensive_neighborhoods.hvplot.bar(y='sale_price_sqr_foot',
+                                      x='neighborhood', 
+                                      title="Most Expensive Neighborhoods", 
+                                      rot = 90
+                                     )
+
 
 #%%
+
+# Comparing cost to purchase versus rental income
+
+# In this section, you will use hvplot to create an 
+# interactive visualization with a dropdown selector 
+# for the neighborhood. 
+# This visualization will feature a side-by-side comparison
+#  of average price per square foot versus average montly rent by year.
+
+# Hint: Use the hvplot parameter, groupby, to create a dropdown selector
+#  for the neighborhood.
+
+
 #%%
+
+# Fetch the previously generated DataFrame that was grouped by year and neighborhood
+print(avg_prices_nhbrhood.head())
+
+#%%
+
+# Plotting the data 
+def choose_neighborhood(neighborhood):
+    return neighborhood
+
+# Declare one list of neighborhoods to be used in a Panel select list
+list_of_neighborhoods = sfo_data['neighborhood'].tolist()
+
+interact(choose_neighborhood, neighborhood=list_of_neighborhoods)
+
+# avg_prices_nhbrhood.hvplot(y='year', x='sale_price_sqr_foot', groupby='neighborhood')
+#sbs_neighborhood = avg_prices_nhbrhood.groupby(by="neighborhood").mean()
+
+#avg_prices_nhbrhood.hvplot(y='year', x='gross_rent', groupby='neighborhood')
+
+bar1 = avg_prices_nhbrhood.hvplot(
+                y = ["sale_price_sqr_foot", "gross_rent"],
+                x = "year",
+                kind = "bar",
+                groupby="neighborhood",
+                title="Side-by-Side Comparison: Avg Price (SqFt) to Avg Mo Rent, by Year",
+                rot=90
+                )
+bar1
+
+
 #%%
 
 # Neighborhood Map
@@ -261,6 +351,8 @@ ten_priciest=mean_price_sorted.head(10)
 # Remember, you will need your Mapbox API key for this.
 
 #%%
+
+# Load Location Data
 
 
 file_coord_path="C:/Users/CS_Knit_tinK_SC/Documents/GitHub/HW_5_PyViz_Inputs/Resources/neighborhoods_coordinates.csv"
@@ -280,24 +372,28 @@ print(map_coord_data.head())
 #    Join the average values with the neighborhood locations.
 
 
-
-mean_sale_price_sq_foot.head()
+# Calculate the mean values for each neighborhood
+print(df_costs.head())
 
 #%%
 
+# Join the average values with the neighborhood locations
+
 # change column name to match map df
 
-mean_sale_price_sq_foot=mean_sale_price_sq_foot.rename(columns={'neighborhood': 'Neighborhood'})
+df_costs=df_costs.rename(columns={'neighborhood': 'Neighborhood'})
 
 #%%
 
 # join the two tables in to one
 
-neighbor_all =pd.merge(mean_sale_price_sq_foot, map_coord_data, on= 'Neighborhood')
+neighbor_all =pd.merge(df_costs, map_coord_data, on= 'Neighborhood')
 print(neighbor_all)
 
 #%%
 #%%
+#%%
+
 
 # Mapbox Visualization
 
@@ -305,13 +401,54 @@ print(neighbor_all)
 
 
 #%%
-neighbor_map=pd.Series(neighbor_all)
+
+# Set the mapbox access token
+# Prep Token
+
+# Read the Mapbox API key
+load_dotenv()  # mac
+
+# path = "C:/users/garth/.env"
+home = Path.home() / ".env"  # windows 1/2
+load_dotenv(home)  # windows 2/2
+
+map_box_api = os.getenv("mapbox")
+
+# Set the Mapbox API
+px.set_mapbox_access_token(map_box_api)
+
+# Create a scatter mapbox to analyze neighborhood info
+# Plot Data
+map_plot = px.scatter_mapbox(
+    neighbor_all,  # replace with df to watch your computer slow to an absolute crawl!
+    lat="Lat",
+    lon="Lon",
+    size="sale_price_sqr_foot",
+    color="gross_rent",
+    zoom=11
+)
+
+# Display the map
+map_plot.show()
+
+
+#%%
+#%%
+#%%
+
+# Cost Analysis - Optional Challenge
+
+# In this section, you will use Plotly express to create visualizations 
+# that investors can use to interactively filter and explore 
+# various factors related to the house value of the San Francisco's neighborhoods.
+
+# Create a DataFrame showing the most expensive neighborhoods in San Francisco by year
 
 #%%
 
-# prior
+# Fetch the data from all expensive neighborhoods per year.
+df_expensive_neighborhoods_per_year = df_costs[df_costs["Neighborhood"].isin(df_expensive_neighborhoods["neighborhood"])]
+print(df_expensive_neighborhoods_per_year.head())
 
-#pop_count="C:/Users/CS_Knit_tinK_SC/Documents/My Data Sources/101421/population_counts.csv"
-#foreclosures = pd.read_csv(pop_count, index_col='filing_date', parse_dates=True, infer_datetime_format=True)
 
-#%%
+
