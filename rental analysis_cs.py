@@ -191,7 +191,16 @@ avg_prices_nhbrhood = new_df.groupby(level=[0,1])['sale_price_sqr_foot', 'gross_
 
 #%%
 
+# set up datafile for use with last section of program - including two-level sort. 
 df_costs_year_sorted=avg_prices_nhbrhood.sort_values(['year','sale_price_sqr_foot'], ascending=False)
+
+# rename column to match with other datafile.
+df_costs_year_sorted=df_costs_year_sorted.rename(columns={'neighborhood': 'Neighborhood'})
+
+# update index 
+df_costs_year_sorted.reset_index(level=0, inplace=True, drop=True)
+
+
 
 #%%
 #%%
@@ -207,8 +216,8 @@ print(avg_prices_nhbrhood.head())
 # Define function to choose a year
 
 # Define function to choose a year
-def choose_year(year):
-    return year
+def choose_neighborhood(neighborhood):
+    return neighborhood
 
 #%%
 
@@ -219,7 +228,7 @@ def choose_year(year):
 #%%
 # Declare one list of neighborhoods to be used in a Panel select list
 list_of_neighborhoods = sfo_data['neighborhood'].tolist()
-interact(choose_year, year=list_of_years)
+interact(choose_neighborhood, neighborhood=list_of_neighborhoods)
 
 avg_prices_nhbrhood.hvplot(y='year',
     x='sale_price_sqr_foot',
@@ -387,7 +396,7 @@ print(df_costs.head())
 
 # Join the average values with the neighborhood locations
 
-# change column name to match map df
+# change column name to match map df column name
 
 df_costs=df_costs.rename(columns={'neighborhood': 'Neighborhood'})
 
@@ -454,12 +463,13 @@ map_plot.show()
 
 #%%
 
-# Fetch the data from all expensive neighborhoods per year.
+# Fetch the data from all expensive neighborhoods per year, from df_costs_year_sorted table.
 
-#df_costs=df_costs.rename(columns={'neighborhood': 'Neighborhood'})
 
-df_costs_year_sorted=df_costs_year_sorted.rename(columns={'neighborhood': 'Neighborhood'})
 df_expensive_neighborhoods_per_year = df_costs_year_sorted[df_costs_year_sorted["Neighborhood"].isin(df_expensive_neighborhoods["neighborhood"])]
+
+# Update index for this new dataframe so it's valid and useful.
+df_expensive_neighborhoods_per_year.reset_index(level=0, inplace=True, drop=True)
 print(df_expensive_neighborhoods_per_year.head())
 
 
