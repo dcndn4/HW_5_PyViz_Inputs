@@ -188,6 +188,11 @@ new_df = sfo_data.set_index(['year', 'neighborhood'])
 #%%
 
 avg_prices_nhbrhood = new_df.groupby(level=[0,1])['sale_price_sqr_foot', 'gross_rent'].mean().reset_index()
+
+#%%
+
+df_costs_year_sorted=avg_prices_nhbrhood.sort_values(['year','sale_price_sqr_foot'], ascending=False)
+
 #%%
 #%%
 #%%
@@ -271,8 +276,11 @@ mean_sale_price_sq_foot_all.reset_index(level=0, inplace=True)
 # changed my mean_sale_price_sq_foot to starter program's df_costs
 
 df_costs=mean_sale_price_sq_foot_all[["neighborhood", "sale_price_sqr_foot", "housing_units", "gross_rent"]]
+
 #%%
-df_costs_sorted=df_costs.sort_values(by='sale_price_sqr_foot', ascending=False)
+df_costs_sorted=df_costs.sort_values(by='sale_price_sqr_foot', ascending=False) 
+#%%
+
 
 #%%
 
@@ -447,8 +455,19 @@ map_plot.show()
 #%%
 
 # Fetch the data from all expensive neighborhoods per year.
-df_expensive_neighborhoods_per_year = df_costs[df_costs["Neighborhood"].isin(df_expensive_neighborhoods["neighborhood"])]
+
+#df_costs=df_costs.rename(columns={'neighborhood': 'Neighborhood'})
+
+df_costs_year_sorted=df_costs_year_sorted.rename(columns={'neighborhood': 'Neighborhood'})
+df_expensive_neighborhoods_per_year = df_costs_year_sorted[df_costs_year_sorted["Neighborhood"].isin(df_expensive_neighborhoods["neighborhood"])]
 print(df_expensive_neighborhoods_per_year.head())
+
+
+#%%
+
+# df_costs_year_sorted=avg_prices_nhbrhood.sort_values(['year','sale_price_sqr_foot'], ascending=False)
+
+
 
 
 
